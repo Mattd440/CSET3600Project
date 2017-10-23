@@ -1,8 +1,5 @@
-/**
- * Created by MattDiederick on 9/19/17.
- */
-// points
-//point class
+
+
 function Point(x,y)
 {
     this.leftPercent =x;
@@ -78,7 +75,8 @@ var addElement = (function(){
 function ToggleVisibility(type)
 {
     var div = document.getElementById("addHost");
-    var switchdiv = document.getElementById("addSwitch");       
+    var switchdiv = document.getElementById("addSwitch");      
+   
     if(type == "host")
     {
         
@@ -91,7 +89,7 @@ function ToggleVisibility(type)
             if (switchdiv.style.display === 'block'){
                 switchdiv.style.display = 'none';
             }
-
+            var addHostImageBtn = document.getElementById("addHostImageBtn").disabled = true;
         }
    } 
    else if(type == "switch")
@@ -108,7 +106,6 @@ function ToggleVisibility(type)
             }
 
         }
-
    }
 
 }
@@ -127,15 +124,26 @@ function postHost() {
     var eth0 = document.getElementById("eth0").value;
     var switchName = document.getElementById("switch").value;
 
-    //console.log(name);
-   // console.log(eth0);
+   
+   if(!name || !eth0 || !switchName )
+   {
+    alert("Enter All Fields Before Saving A Host");
+   }else{
+    this.addElement.addHost();
+
     var host = new Host(name,switchName, eth0);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'Create/AddNewHost', true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(host));
+    }
+
+   document.getElementById("name").value = "";
+   document.getElementById("eth0").value = "";
+   document.getElementById("switch").value = "";
 
 }
+
 
 function Switch(name, eth0, ports)
 {
@@ -147,35 +155,58 @@ function Switch(name, eth0, ports)
 
 function postSwitch() {
     var name = document.getElementById("switchname").value;
-    var eth0 = document.getElementById("eth0").value;
+    var eth0sw = document.getElementById("eth0sw").value;
     var ports = document.getElementById("ports").value;
 
-    var switch1 = new Switch(name, eth0, ports);
+    if(!name || !eth0 || !ports)
+    {
+        alert("Enter All Fields Before Saving A Switch");
+    }else{
+        this.addElement.addSwitch();
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'Create/AddNewSwitch', true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send(JSON.stringify(switch1));
+        var switch1 = new Switch(name, eth0sw, ports);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'Create/AddNewSwitch', true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(switch1));
+
+    }
+
+    document.getElementById("switchname").value = "";
+    document.getElementById("eth0sw").value = "";
+    document.getElementById("ports").value = "";
+
 
 }
+
+
 function postNewNetwork()
 {
-    var mainContent = document.getElementsByClassName('hiddenArea');
-    mainContent.removeClass('hiddenArea');
-    mainContent.addClass('unhiddenArea');
-    var saveBtn = document.getElementById("saveNetwork");
-    var name = document.getElementById("newNetworkName").value;
+    showButtons();
+
+   var name = document.getElementById("newNetworkName").value;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'Create/addnetwork', true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(name))
-    
-    saveBtn.disabled = true;
-   
+  
 }
-function showMainArea()
+
+
+function showButtons()
 {
-    var mainArea = document.getElementsByClassName("hiddenArea");
-    mainArea.style.display = "block";
-    mainArea.
+    var saveBtn = document.getElementById("saveNetwork");
+   var addBtns = document.getElementById("controlButtons");
+   var networkInput = document.getElementById("newNetworkName");
+
+    if(networkInput.value)
+    {
+        addBtns.style.display = "inline-block";
+        saveBtn.disabled = true;
+    }
+    else{
+        alert("Please Enter a network name");
+    }
+  
 }

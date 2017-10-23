@@ -22,13 +22,14 @@ namespace NetworkConfigurator.Controllers
         public Host newHost;
         public Switch newSwitch;
         public Network newNetwork;
+        public CreateDataManager createDM;
        // public int NetworkID = 1;
       //  public static bool NetworkCreated = false;
        static string   NetworkName; 
         //constructor to initialize network components 
         public CreateController(PeopleContext context)
         {
-            
+            createDM = new CreateDataManager(context);
             this._context = context;
             //this.newHost = new Host();
             //this.newSwitch = new Switch();
@@ -52,17 +53,13 @@ namespace NetworkConfigurator.Controllers
                 this.newNetwork = new Network();
                 this.newNetwork.Name = name;
               
-                SaveNetwork(_context, this.newNetwork);
+                createDM.SaveNetwork(this.newNetwork);
                 
             }
 
             return RedirectToAction("Index");
         }
-        public void SaveNetwork(PeopleContext context, Network network)
-        {
-            context.Network.Add(network);
-            context.SaveChanges();
-        }
+
 
 
         //  /create/addhost 
@@ -78,16 +75,12 @@ namespace NetworkConfigurator.Controllers
             newHost.SwitchID = _context.getSwitchID(host.switchName) ;
              this.newHost.NetworkID = _context.getNetworkId(NetworkName);
 
-            SaveHost(_context, this.newHost);
+            CreateDataManager.SaveHost(_context, this.newHost);
 
 
             return RedirectToAction("Index");
         }
-        public void SaveHost(PeopleContext context, Host host)
-        {
-            context.Hosts.Add(host);
-            context.SaveChanges();
-        }
+
 
 
         // /create/addswitch
@@ -101,16 +94,9 @@ namespace NetworkConfigurator.Controllers
             this.newSwitch.ports = switch1.ports;
             this.newSwitch.NetworkID = _context.getNetworkId(NetworkName);
 
-          SaveSwitch(_context, this.newSwitch); 
+            CreateDataManager.SaveSwitch(_context, this.newSwitch); 
 
             return RedirectToAction("Index");
-        }
-
-
-        public void SaveSwitch(PeopleContext context, Switch switch1)
-        {
-            context.Switchs.Add(switch1);
-            context.SaveChanges();
         }
 
     }

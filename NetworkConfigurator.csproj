@@ -10,11 +10,15 @@
 
   <ItemGroup>
     <None Remove="Properties\PublishProfiles\viewnet2 - Web Deploy.pubxml" />
+    <None Remove="Views\Create\Index.html" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\savedIndex.js" />
+    <Content Remove="wwwroot\css\SavedIndex.css" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="wwwroot\css\SavedIndex.css" />
-    <Content Include="wwwroot\js\Detail.js" />
     <Content Include="wwwroot\js\savedIndex.js" />
   </ItemGroup>
 
