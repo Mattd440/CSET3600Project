@@ -160,11 +160,22 @@ function postSwitch() {
 }
 function postNewNetwork()
 {
-    //var mainContent = document.getElementById("mainContent");
+    var mainContent = document.getElementsByClassName('hiddenArea');
+    mainContent.removeClass('hiddenArea');
+    mainContent.addClass('unhiddenArea');
+    var saveBtn = document.getElementById("saveNetwork");
     var name = document.getElementById("newNetworkName").value;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'Create/addnetwork', true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(name))
-    //mainContent.style.display = "block"; 
+    
+    saveBtn.disabled = true;
+   
+}
+function showMainArea()
+{
+    var mainArea = document.getElementsByClassName("hiddenArea");
+    mainArea.style.display = "block";
+    mainArea.
 }

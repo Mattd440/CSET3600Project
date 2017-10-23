@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\SavedIndex.css" />
+    <Content Include="wwwroot\js\Detail.js" />
     <Content Include="wwwroot\js\savedIndex.js" />
   </ItemGroup>
 
@@ -37,10 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="File\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Create\" />
-    <Folder Include="Views\Saved\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

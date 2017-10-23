@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NetworkConfigurator.DataManager;
 using NetworkConfigurator.Model;
+using Newtonsoft.Json;
+using System.IO; 
 
 namespace NetworkConfigurator.Controllers
 {
@@ -58,12 +60,25 @@ namespace NetworkConfigurator.Controllers
            
             return View(networks);
         }
-
+        SavedViewModel network;
         public async Task<IActionResult> Detail(int id)
         {
-            SavedViewModel network =await GetNetwork(id);
+            network  = await GetNetwork(id);
 
             return View("Detail", network);
+        }
+
+        public FileStreamResult DownloadFile()
+        {
+            var location = "NetworkConfigurator.File";
+            if(network != null)
+            {
+                
+                System.IO.File.WriteAllText(location + "/mynetwork.json", JsonConvert.SerializeObject(network));
+                Stream str = System.IO.File.OpenRead(location + "/mynetwork.json");
+                return new FileStreamResult(str, Microsoft.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json"));
+            }
+            return null;
         }
     }
 }
